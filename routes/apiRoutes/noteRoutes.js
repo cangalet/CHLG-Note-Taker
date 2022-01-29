@@ -1,7 +1,9 @@
 const router = require('express').Router();
-const { createNewNote, validateNote } = require('../../lib/notes')
+const fs = require('fs');
+const path = require('path');
+const { createNewNote, validateNote, queryId } = require('../../lib/notes')
 
-const { notes } = require('../../db/db.json');
+let { notes } = require('../../db/db.json');
 
 // gets existing notes
 router.get('/notes', (req, res) => {
@@ -10,13 +12,26 @@ router.get('/notes', (req, res) => {
 
 // saves a new note
 router.post('/notes', (req, res) => {
-    req.body.id = notes.length.toString();
+    
     if (!validateNote(req.body)) {
         res.status(400).send('The note is not properly formatted.');
     } else {
         const note = createNewNote(req.body, notes);
         res.json(note);
     }
+});
+
+// delete a note
+router.delete("/notes/:id", (req, res) => {
+    
+    notes = queryId(req.params.id, notes);
+    
+    fs.writeFileSync("./db/db.json",
+        JSON.stringify({ notes }, null, 2)
+    );
+    
+    res.json(notes);
+
 });
 
 
