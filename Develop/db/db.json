@@ -1,8 +1,18 @@
 {
-    "notes": [
+  "notes": [
     {
-        "title":"Test Title",
-        "text":"Test text"
+      "title": "Test Title",
+      "text": "Test text"
+    },
+    {
+      "title": "Test Note",
+      "text": "Testing to save note",
+      "id": "1"
+    },
+    {
+      "title": "2nd test note",
+      "text": "Adding to the note object array",
+      "id": "2"
     }
-]
+  ]
 }
